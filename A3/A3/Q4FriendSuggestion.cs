@@ -7,12 +7,12 @@ using TestCommon;
 
 namespace A3
 {
-    public class Q4FriendSuggestion:Processor
+    public class Q4FriendSuggestion : Processor
     {
         public Q4FriendSuggestion(string testDataName) : base(testDataName) { }
 
         public override string Process(string inStr) =>
-            TestTools.Process(inStr, (Func<long, long, long[][], long,long[][], long[]>)Solve);
+            TestTools.Process(inStr, (Func<long, long, long[][], long, long[][], long[]>)Solve);
         public long extraxtMin(List<Node> stack)
         {
             int min = int.MaxValue;
@@ -24,7 +24,7 @@ namespace A3
                     min = i;
                     minV = stack[i].value1;
                 }
-                    
+
             }
             return min;
         }
@@ -42,9 +42,9 @@ namespace A3
             }
             return min;
         }
-        public long[] Solve(long NodeCount, long EdgeCount, 
-                              long[][] edges, long QueriesCount, 
-                              long[][]Queries)
+        public long[] Solve(long NodeCount, long EdgeCount,
+                              long[][] edges, long QueriesCount,
+                              long[][] Queries)
         {
             List<List<long>> costs = new List<List<long>>();
             List<long> result = new List<long>();
@@ -53,6 +53,7 @@ namespace A3
             for (int i = 0; i <= (int)NodeCount; i++)
             {
                 graph.Add(new Node());
+                graph[i].index = i;
             }
             for (int i = 0; i < edges.Length; i++)
             {
@@ -64,60 +65,70 @@ namespace A3
             }
             for (int k = 0; k < QueriesCount; k++)
             {
-                for (int i = 0;  i<=(int)NodeCount; i++)
+                for (int i = 0; i <= (int)NodeCount; i++)
                 {
                     graph[i].value1 = int.MaxValue;
                     graph[i].value2 = int.MaxValue;
                 }
-              
-                List<Node> stack = new List<Node>();
-                List<Node> stack2 = new List<Node>();
+
+                MinHeap2 stack = new MinHeap2(EdgeCount);
+                MinHeap2 stack2 = new MinHeap2(EdgeCount);
                 List<Node> pro = new List<Node>();
                 List<Node> pro2 = new List<Node>();
                 graph[(int)Queries[k][1]].value2 = 0;
                 graph[(int)Queries[k][0]].value1 = 0;
-               
-                stack.Add(graph[(int)Queries[k][0]]);
-                stack2.Add(graph[(int)Queries[k][1]]);
+
+                stack.Add(Tuple.Create((int)Queries[k][0], graph[(int)Queries[k][0]].value1));
+                stack2.Add(Tuple.Create((int)Queries[k][1], graph[(int)Queries[k][1]].value2));
                 Node theNode = null;
                 long minDistance = int.MaxValue;
                 long counter = 0;
-                while (stack.Count != 0 && stack2.Count !=0)
+                while (stack._size != 0 && stack2._size != 0)
                 {
                     counter++;
-                    long min = extraxtMin(stack);
-                    long min2 = extraxtMin2(stack2);
-                    Node node2 = stack2[(int)min2];
-                    Node node = stack[(int)min];
-                    stack2.RemoveAt((int)min2);
-                    stack.RemoveAt((int)min);
+                    //long min = extraxtMin(stack);
+                    //long min2 = extraxtMin2(stack2);
+                    var node2Index = stack2.Pop();
+                    var nodeIndex = stack.Pop();
+                    Node node2 = graph[node2Index.Item1];
+                    Node node = graph[nodeIndex.Item1];
+                    if (node2.value2 != node2Index.Item2)
+                    {
+                        node2 = graph[stack2.Pop().Item1];
+                    }
+                    if (node.value1 != nodeIndex.Item2)
+                    {
+                        node = graph[stack.Pop().Item1];
+                    }
+                    //stack2.RemoveAt((int)min2);
+                    //stack.RemoveAt((int)min);
                     pro.Add(node);
                     pro2.Add(node2);
-                   
+
                     for (int i = 0; i < node2.edges_in.Count; i++)
                     {
                         if (node2.value2 + node2.edge_inCosts[i] < node2.edges_in[i].value2)
                         {
                             node2.edges_in[i].value2 = node2.value2 + node2.edge_inCosts[i];
-                            stack2.Add(node2.edges_in[i]);
-                            
+                            stack2.Add(Tuple.Create(node2.edges_in[i].index, node2.edges_in[i].value2));
+
                         }
 
                     }
-                 
+
 
                     for (int i = 0; i < node.edges.Count; i++)
                     {
                         if (node.value1 + node.edgeCosts[i] < node.edges[i].value1)
                         {
                             node.edges[i].value1 = node.value1 + node.edgeCosts[i];
-                            stack.Add(node.edges[i]);
-                           
+                            stack.Add(Tuple.Create(node.edges[i].index, node.edges[i].value1));
+
                         }
-                        
+
                     }
 
-                        if (node.value2 != int.MaxValue)
+                    if (node.value2 != int.MaxValue)
                     {
                         if (node.value2 + node.value1 < minDistance)
                             minDistance = node.value2 + node.value1;
@@ -128,19 +139,19 @@ namespace A3
                             minDistance = node2.value2 + node2.value1;
                     }
 
-                    if (pro.Contains(node) && pro2.Contains(node) && node.value1+node.value2 <= minDistance)
-                        {
-                                theNode = node;
-                             break;
-                        }
-                        if (pro.Contains(node2) && pro2.Contains(node2) && node2.value2+node2.value1<=minDistance)
-                        {
+                    if (pro.Contains(node) && pro2.Contains(node) && node.value1 + node.value2 <= minDistance)
+                    {
+                        theNode = node;
+                        break;
+                    }
+                    if (pro.Contains(node2) && pro2.Contains(node2) && node2.value2 + node2.value1 <= minDistance)
+                    {
 
-                                theNode = node2;
+                        theNode = node2;
                         break;
 
-                        }
-                        
+                    }
+
 
 
 
@@ -148,7 +159,7 @@ namespace A3
 
 
                 if (theNode != null)
-                {   
+                {
                     long distance = theNode.value1 + theNode.value2;
                     if (graph[(int)Queries[k][0]].value2 < distance)
                         distance = graph[(int)Queries[k][0]].value2;
@@ -158,70 +169,113 @@ namespace A3
                 }
                 else
                     result.Add(-1);
-               
-               
+
+
             }
-           
-          
+
+
 
             return result.ToArray();
         }
     }
-    public class minHeap
+    public class MinHeap2
     {
-        public List<Node> heap = new List<Node>();
-        public void add(Node node)
+        public Tuple<int, long>[] _elements;
+        public int _size;
+
+        public MinHeap2(long size)
         {
-            heap.Add(node);
-            sUp(heap.Count - 1);
-        }
-        public Node pop()
-        {
-            Node tmp = heap[0];
-            sDown(0);
-            
-            return tmp;
-        }
-        public void sDown(int index)
-        {
-            if (heap.Count > (index * 2) + 2)
-            {
-                swap(index, (index * 2) + 2);
-                sDown((index * 2) + 2);
-            }
-            else if (heap.Count > (index * 2) + 1)
-            {
-                swap(index, (index * 2) + 1);
-                sDown((index * 2) + 1);
-            }
-            else
-                heap.RemoveAt(index);
-        }
-        public void sUp(int index)
-        {
-            if (index != 0)
-            {
-                int parent = getParent(index);
-                if (heap[parent].value1 > heap[index].value1)
-                {
-                    swap(index, parent);
-                    sUp(parent);
-                }
-            }
-        }
-        public int getParent(int index)
-        {
-            if (index % 2 == 1)
-                return (index - 1) / 2;
-            else
-                return (index - 2) / 2;
-        }
-        public void swap(int a , int b)
-        {
-            Node tmp = heap[a];
-            heap[a] = heap[b];
-            heap[b] = tmp ;
+            _elements = new Tuple<int, long>[size];
         }
 
+        private int GetLeftChildIndex(int elementIndex) => 2 * elementIndex + 1;
+        private int GetRightChildIndex(int elementIndex) => 2 * elementIndex + 2;
+        private int GetParentIndex(int elementIndex) => (elementIndex - 1) / 2;
+
+        private bool HasLeftChild(int elementIndex) => GetLeftChildIndex(elementIndex) < _size;
+        private bool HasRightChild(int elementIndex) => GetRightChildIndex(elementIndex) < _size;
+        private bool IsRoot(int elementIndex) => elementIndex == 0;
+
+        private Tuple<int, long> GetLeftChild(int elementIndex) => _elements[GetLeftChildIndex(elementIndex)];
+        private Tuple<int, long> GetRightChild(int elementIndex) => _elements[GetRightChildIndex(elementIndex)];
+        private Tuple<int, long> GetParent(int elementIndex) => _elements[GetParentIndex(elementIndex)];
+
+        private void Swap(int firstIndex, int secondIndex)
+        {
+            var temp = _elements[firstIndex];
+            _elements[firstIndex] = _elements[secondIndex];
+            _elements[secondIndex] = temp;
+        }
+
+        public bool IsEmpty()
+        {
+            return _size == 0;
+        }
+
+        public Tuple<int, long> Peek()
+        {
+            if (_size == 0)
+                throw new IndexOutOfRangeException();
+
+            return _elements[0];
+        }
+
+        public Tuple<int, long> Pop()
+        {
+            if (_size == 0)
+                throw new IndexOutOfRangeException();
+
+            var result = _elements[0];
+            _elements[0] = _elements[_size - 1];
+            _size--;
+
+            ReCalculateDown();
+
+            return result;
+        }
+
+        public void Add(Tuple<int, long> element)
+        {
+            if (_size == _elements.Length)
+                throw new IndexOutOfRangeException();
+
+            _elements[_size] = element;
+            _size++;
+
+            ReCalculateUp();
+        }
+
+        private void ReCalculateDown()
+        {
+            int index = 0;
+            while (HasLeftChild(index))
+            {
+                var smallerIndex = GetLeftChildIndex(index);
+                if (HasRightChild(index) && GetRightChild(index).Item2 < GetLeftChild(index).Item2)
+                {
+                    smallerIndex = GetRightChildIndex(index);
+                }
+
+                if (_elements[smallerIndex].Item2 >= _elements[index].Item2)
+                {
+                    break;
+                }
+
+                Swap(smallerIndex, index);
+                index = smallerIndex;
+            }
+        }
+
+        private void ReCalculateUp()
+        {
+            var index = _size - 1;
+            while (!IsRoot(index) && _elements[index].Item2 < GetParent(index).Item2)
+            {
+                var parentIndex = GetParentIndex(index);
+                Swap(parentIndex, index);
+                index = parentIndex;
+            }
+        }
     }
+
 }

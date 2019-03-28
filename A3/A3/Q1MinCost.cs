@@ -72,6 +72,7 @@ namespace A3
         public List<long> edgeCosts = new List<long>();
         public List<long> edge_inCosts = new List<long>();
         public Tuple<Node,long> parent;
+        public int index;
         
     }
 
