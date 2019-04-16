@@ -33,7 +33,7 @@ namespace A6
             long[] result = new long[TL];
             for (int i=0; i < TL; i++)
             {
-                result[i]=(TL- mText[i].Length);
+                result[i]=TL- mText[i].Length;
             }
             return result;
         }

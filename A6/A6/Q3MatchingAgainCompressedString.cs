@@ -80,7 +80,7 @@ namespace A6
             long[] result = new long[n];
             for (int i = 0; i< n; i++)
             {
-                result[i]=(find(patterns[i].ToList(),text));
+                result[i]=find(patterns[i].ToList(),text);
             }
             return result;
         }
