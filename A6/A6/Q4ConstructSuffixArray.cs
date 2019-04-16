@@ -27,12 +27,12 @@ namespace A6
                 textList.RemoveAt(0);
             }
             mText.Sort();
-            List<long> result = new List<long>();
+            long[] result = new long[TL];
             for (int i=0; i < TL; i++)
             {
-                result.Add(TL- mText[i].Length);
+                result[i]=(TL- mText[i].Length);
             }
-            return result.ToArray();
+            return result;
         }
     }
 }
