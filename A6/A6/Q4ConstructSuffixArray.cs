@@ -20,11 +20,14 @@ namespace A6
         {
             int TL = text.Length;
             List<string> mText =new List<string>();
-            List<char> textList = text.ToList();
             for (int i = 0; i < TL; i++)
             {
-                mText.Add(string.Join("", textList));
-                textList.RemoveAt(0);
+                StringBuilder str = new StringBuilder();
+                for (int j = i; j < TL; j++)
+                {
+                    str.Append(text[j]);
+                }
+                mText.Add(str.ToString());
             }
             mText.Sort();
             long[] result = new long[TL];
