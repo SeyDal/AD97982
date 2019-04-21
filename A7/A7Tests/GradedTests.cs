@@ -19,7 +19,7 @@ namespace A7.Tests
             RunTest(new Q1FindAllOccur("TD1"));
         }
 
-        [TestMethod(), Timeout(1400)]
+        [TestMethod(), Timeout(1500)]
         public void SolveTest_Q2()
         {
             RunTest(new Q2CunstructSuffixArray("TD2"));
