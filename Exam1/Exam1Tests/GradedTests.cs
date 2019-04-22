@@ -12,7 +12,7 @@ namespace Exam1.Tests
     [TestClass()]
     public class GradedTests
     {
-        [TestMethod(),Timeout(15000)]
+        [TestMethod(),Timeout(17000)]
         [DeploymentItem("TestData", "Exam1_TestData")]
         public void SolveQ1BetweennessTest()
         {
@@ -26,7 +26,7 @@ namespace Exam1.Tests
                 );
         }
 
-        [TestMethod(),Timeout(15000)]
+        [TestMethod(),Timeout(17000)]
         [DeploymentItem("TestData", "Exam1_TestData")]
         public void SolveQ2CryptanalystTest()
         {
