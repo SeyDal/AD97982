@@ -74,7 +74,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TestData\TD1\In_1.txt" />
+    <Content Include="TestData\TD1\In_1.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\TD1\In_10.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -105,7 +107,9 @@
     <Content Include="TestData\TD1\In_19.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\TD1\In_2.txt" />
+    <Content Include="TestData\TD1\In_2.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\TD1\In_20.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -136,7 +140,9 @@
     <Content Include="TestData\TD1\In_29.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\TD1\In_3.txt" />
+    <Content Include="TestData\TD1\In_3.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\TD1\In_30.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -167,7 +173,9 @@
     <Content Include="TestData\TD1\In_39.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\TD1\In_4.txt" />
+    <Content Include="TestData\TD1\In_4.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\TD1\In_40.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -423,7 +431,9 @@
     <Content Include="TestData\TD2\In_19.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\TD2\In_2.txt" />
+    <Content Include="TestData\TD2\In_2.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\TD2\In_20.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -487,7 +497,9 @@
     <Content Include="TestData\TD2\In_39.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\TD2\In_4.txt" />
+    <Content Include="TestData\TD2\In_4.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\TD2\In_40.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -518,7 +530,9 @@
     <Content Include="TestData\TD2\In_49.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TestData\TD2\In_5.txt" />
+    <Content Include="TestData\TD2\In_5.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\TD2\In_50.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
