@@ -27,7 +27,7 @@ namespace A9.Tests
             RunTest(new Q3OnlineAdAllocation("TD2"));
         }
 
-        [TestMethod()]
+        [TestMethod(), Timeout(2000)]
         public void SolveTest_Q3OnlineAdAllocation()
         {
             //Assert.Inconclusive("A9.Q3 Not Solved");
