@@ -301,8 +301,8 @@ namespace TestCommon
 
                 Stopwatch sw;
                 string outFile;
-                try
-                {
+                /*try
+                {*/
                     var lines = File.ReadAllText(inFile);
 
                     sw = Stopwatch.StartNew();
@@ -322,12 +322,12 @@ namespace TestCommon
                     Verifier(inFile, result);
 
                     Console.WriteLine($"Test Passed ({sw.Elapsed.ToString()}): {inFile}");
-                }
+                /*}
                 catch (Exception e)
                 {
                     failedTests.Add($"Test failed for input {inFile}: {e.Message}");
                     Console.WriteLine($"Test Failed: {inFile}");
-                }
+                }*/
             }
 
             Assert.IsTrue(failedTests.Count == 0,
@@ -816,7 +816,6 @@ namespace TestCommon
             Debug.WriteLine($"Solution found: {bSat}");
             var bExpectedSat =
                 expected.Trim(TestTools.IgnoreChars) == "SATISFIABLE";
-
             Assert.AreEqual(bExpectedSat, bSat);
         }
 
