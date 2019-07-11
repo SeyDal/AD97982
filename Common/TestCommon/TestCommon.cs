@@ -6,30 +6,13 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
+
 namespace TestCommon
 {
     public static class TestTools
     {
         public static readonly char[] IgnoreChars = new char[] { '\n', '\r', ' ' };
         public static readonly char[] NewLineChars = new char[] { '\n', '\r' };
-
-        public static string Process(string inStr, Func<int, int?[,], string> solve)
-        {
-            var lines = inStr.Split(NewLineChars, StringSplitOptions.RemoveEmptyEntries);
-            int dim = int.Parse(lines[0].Trim());
-            var table = lines.Skip(1).Select(l =>
-                l.Split(IgnoreChars, StringSplitOptions.RemoveEmptyEntries)
-                 .Select(e => (e == ".") ?
-                    null :
-                    new int?(int.Parse(e))).ToArray()).ToArray();
-
-            int?[,] table2d = new int?[dim, dim];
-            for (int i = 0; i < dim; i++)
-                for (int j = 0; j < dim; j++)
-                    table2d[i, j] = table[i][j];
-
-            return solve(dim, table2d);
-        }
 
         public static string Process(string inStr, Func<long, char[], long[][], char[]> solve)
         {
@@ -816,7 +799,6 @@ namespace TestCommon
             Debug.WriteLine($"Solution found: {bSat}");
             var bExpectedSat =
                 expected.Trim(TestTools.IgnoreChars) == "SATISFIABLE";
-
             Assert.AreEqual(bExpectedSat, bSat);
         }
 
